@@ -1,0 +1,288 @@
+/*
+Description: The Arialist XHTML/CSS Template
+Version: 1.0
+
+Using MentariCSS Framework
+Get it from http://www.mentaricss.com
+Licensed under GPL
+
+Written by: Mohd Huzairy from Malaysia (http://mohd.huzairy.com)
+The Arialist official website: http://www.mentariworks.com/thearialist.html
+
+Table of contents:
+-------------------
+1.Reset
+2.Table
+3.Typography
+4.Positioning
+5.Page styling (This is where you SHOULD do the editing)
+-------------------
+*/
+
+/* 1.Reset (http://meyerweb.com/eric/tools/css/reset/) */
+html, body, div, span, applet, object, iframe,
+dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, 	tt, var,
+b, u, i, center, dl, dt, dd, fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td
+{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+body
+{
+	line-height: 1;
+}
+
+blockquote, q
+{
+	quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after
+{
+	content: '';
+	content: none;
+}
+
+hr
+{
+	display:none;
+}
+
+/* Uncomment this if you want to disable default bullet and numeric styling.
+ol,ul,li
+{
+	list-style:none;
+	margin:0;
+	padding:0;
+} */
+/* End Reset */
+
+/* 2.Table */
+table									{ border:1px solid #ccc; border-left:none; border-top:none; position:relative; top:-3px; margin:0px 0;padding-bottom:0; border-collapse: separate; border-spacing: 0; width:100%; }
+th, td									{ border-top: none; line-height:18px; position: relative; vertical-align:middle;}
+th										{ background:#666; color:#fff; }
+td,th									{ border-left: none; text-align: center; font-weight: normal;}
+th:last-child, td:last-child			{ padding-right:0; }
+tr:nth-child(even) td					{ padding:1px; }
+tr:nth-child(odd) td					{ padding:1px; }
+caption									{ top:8px; margin-bottom:18px; text-align: left; font-weight: normal; }
+
+/* End Table */
+
+/* 3.Typography */
+h1, h2, h3, h4, h5, h6					{ position: relative; }
+p, blockquote							{ line-height:150%; margin:10px 0 15px 0; text-align:justify; font-size: 1em;}
+cite									{ font-style:normal; display:block; margin:10px 0;}
+code									{ font-family:courier,monospace; background:#fffcdc; border-bottom:1px solid #ccc; font-size:1em; letter-spacing:1px; line-height:150%; }
+acronym, abbr							{ cursor:help; border-bottom:1px dotted #999; }
+/* End Typography */
+
+/* 4.Positioning */
+.clear                                  { clear:both; }
+.left									{ float:left; }
+.right									{ float:right; }
+
+
+/* 5.Page styling */
+body
+{
+	background:#fff;
+	font: 80%/115% arial,verdana,georgia;
+	line-height:150%;
+	color:#333;
+}
+
+#wrapper
+{
+	width:800px;
+	padding:25px;
+	margin:0 auto;
+}
+
+.clear
+{
+	clear:both;
+}
+
+blockquote
+{
+	border-left:1px solid #eee;
+	padding-left:15px;
+	color:#666;
+}
+
+a
+{
+	text-decoration:none;
+    color:#000053;
+	border-bottom:1px solid #eee;
+	font-weight: bold;
+}
+
+a:hover
+{
+	color:#333;
+}
+
+
+#header
+{
+	height:30px;
+	padding:0px 0 0 0;
+	margin-top: 45px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+#header h1 a
+{
+	border:none;
+}
+
+#header p
+{
+	margin:-6px 0 0 2px;
+	color:#999;
+}
+
+h2
+{
+	font-weight:normal;
+	color: black;
+	font-size:1.8em;
+	padding-bottom:7px;
+}
+
+h3
+{
+	color:#4d4d4d;
+	margin-left: 20px;
+	font-weight:bold;
+}
+
+/* Content */
+#content
+{
+	float:left;
+	width:500px;
+    text-align:justify;
+}
+
+.hentry
+{
+	margin-bottom:30px;
+	padding-bottom:20px;
+}
+
+.hentry img
+{
+	margin:5px 0 10px 0;
+}
+
+abbr
+{
+	border:none;
+	font-size:0.9em;
+	color:#999;
+}
+
+small
+{
+	color:#999;
+}
+
+ul, li
+{
+	margin:0;
+	padding:0;
+}
+
+ul
+{
+	list-style:square;
+	margin:20px 0;
+}
+
+ol
+{
+	list-style:decimal;
+	margin:20px 0;
+}
+
+ul li,ol li
+{
+	margin-bottom:10px;
+	color:#444;
+}
+
+.metadata
+{
+	color:#999;
+}
+
+/* Sidebar */
+#sidebar
+{
+	float:right;
+	width:275px;
+}
+
+.widget ul, ol
+{
+	margin:0;
+	padding:0;
+}
+
+.widget
+{
+	margin-bottom:50px;
+}
+
+
+/* Footer */
+#footer
+{
+	width:500px;
+	border-top:1px solid #eee;
+	color:#999;
+}
+
+.separator
+{
+	border-top:1px solid #eee;
+	width:300px;
+	margin-top:15px;
+}
+
+/* Menu */
+#menu
+{
+    	text-align:center;
+}
+
+#menu a
+{
+	font-size: 24pt; height: 60pt; line-height: 60pt; 
+	background: navy; color: white;
+    	display: inline-block; width:40%; text-align:center;
+}
+
+#menu a:hover
+{
+	background: #333;
+}
+
+
+/* Pagination */
+#pagination
+{
+	height:110px;
+}

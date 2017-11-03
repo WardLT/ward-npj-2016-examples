@@ -1,0 +1,21 @@
+#! /bin/bash
+
+if [ "$1" != "inplace" ]; then
+  ## Move all data to a separate 'run' directory
+
+  # Create run directory
+  if [ -d ../run/ ]; then
+    rm -r ../run
+  fi
+  mkdir ../run
+
+  # Move the data there
+  cp -r * ../run
+fi
+
+# Run the scripts
+for d in predicting-band-gap-energies modeling-metallic-glasses; do 
+  cd $d
+  ./run-all.bs
+  cd ..
+done

@@ -1,0 +1,9 @@
+#! /bin/bash
+
+runJupyter() {
+    jupyter nbconvert --execute --inplace --ExecutePreprocessor.timeout=-1 $1
+}
+
+for file in build-and-test-gfa-model.ipynb plot-alnizr-ternary.ipynb predict-new-glasses.ipynb analyze-predictions.ipynb; do
+    runJupyter $file
+done

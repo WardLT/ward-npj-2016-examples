@@ -1,0 +1,59 @@
+// Uses an iterative machine learning approach
+//  to find materials that has a volume close to
+//  20 Ang^3/atom and minimum formation energy
+
+// Import dataset 
+data = new data.materials.CompositionDataset
+data import datasets/small_set.txt
+data attributes properties add set general
+data attributes generate 
+
+// Get initial population
+initial = data subset 10
+
+// Create model: Has to have separate models for each property
+//  used in this model
+model = new models.regression.CompositeRegression
+submodel = new models.regression.MultiPropertyRegression volume_pa delta_e
+leaf = new models.regression.MixingRuleRegression GSvolume_pa -correct
+submodel submodel set volume_pa $leaf
+leaf = new models.regression.WekaRegression trees.REPTree
+submodel submodel set delta_e $leaf 
+model submodel set 0 $submodel
+
+// Create the optimizer. 
+opt = new optimization.algorithms.ActiveLearningOptimizer 0.1 0.1
+
+// Define goal of the optimizer 
+opt set objective min AdaptiveScalarizingEntryRanker 1.0 &
+    -opt min volume_pa TargetEntryRanker 20 &
+    -opt min delta_e SimpleEntryRanker
+
+// Set the initial population and dataset to be searched
+opt set initial $initial
+opt set search $data
+
+// Define the "Oracle" used to evaluate f(x,y). This one
+//  works by looking up the answer from a provided dataset
+opt set oracle LookupOracle $data
+
+// Define other settings
+opt set maxiter 48
+opt set gensize 10
+opt set model $model
+
+// Define what success means:
+//  1. Volume within 10% of 20 Ang^3/atom
+//  2. Delta_e less than zero
+opt stats success include MultiFilter &
+    -filter include PropertyRangeFilter measured volume_pa inside 18.0 22.0 &
+    -filter include PropertyFilter measured delta_e < 0
+
+// Run 
+opt run
+
+// Print results
+print opt stats
+
+// We're done here.
+exit

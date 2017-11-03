@@ -1,0 +1,174 @@
+<html>
+<head>
+	<title>Magpie Tutorial</title>
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+</head>
+<body>
+<div id="wrapper">
+	<div class="footer">
+		<center><a href="index.html">Manual Home</a></center>	
+	</div>
+	<center><h1>Magpie Tutorial</h1></center>
+	<p>This tutorial is designed to explain how to use Magpie to make a machine-learning-based model for the formation energy of crystalline compounds. It covers installation, launching Magpie from the command-line, preparing data in a Magpie-friendly format, and the basics of creating and using models.
+
+	<h2>Installing Magpie</h2>
+	<p>Before installing Magpie, you need to make sure your system has the Java Runtime Environment Version 7 or greater. To do so, open up your computer's command-line prompt and call <code>java -version</code>. If the fist line of the output doesn't look like <code>java version 1.<b>7</b>_071</code>, go to <a href="http://www.oracle.com/technetwork/java/javase/"</a>Java.com</a> and download the latest version.
+	
+	<p>Once your computer has the correct version of Java, download the latest version of Magpie from <a href="http://oqmd.org/static/analytics/magpie/Magpie.zip">OQMD</a> and extract it. The ZIP file available from this link is updated nightly. This folder includes a compiled version of Magpie, this documentation, and a few examples scripts. To verify that everything works, open a command prompt and navigate to your new Magpie folder, and then call
+	
+	<div style="margin-left: 40px">
+		<p><code>java -jar dist/Magpie.jar</code>
+	</div>
+	
+	<p>(Note: If you are using the Windows Command Prompt, the command to launch Magpie is <code>java -jar dist\Magpie.jar</code>).
+	
+	<p>This should open an interactive prompt for Magpie. Press "Enter" or type "exit" to close this prompt.
+	
+	<p>As a more advanced starting test, launch Magpie with the example input script <a href="../examples/simple-model.in">examples/simple-model.in</a> (e.g., by calling <code>java -jar dist/Magpie.jar examples/simple-model.in</code>). You should see the echos of the commands in the input file and output being printed to screen. If so, Magpie is ready to run on your system.
+	
+	<center><img src="img/example_screenshot.png"/></center>
+	
+	<h2>Formatting and Importing Data</h2>
+	
+	<p>In general, Magpie expects whitespace-delimited input files where the first line is a header describing the data (e.g., property names) and the first column is a string describing the material. For example, a dataset containing the composition and formation energy of materials could look like:
+	
+	<div style="margin-left: 40px; font-family: monospace; font-size: 16px">
+		<p>
+		composition delta_e stability{Yes,No}
+		<br>NaCl -5 Yes
+		<br>Fe2O3 -4.2 Yes
+		<br>Ni3.00Al1 -0.4 Yes
+		<br>Ni3F None No
+	</div>
+	
+	<p>A few key things to note about this example are that the acceptable format for the composition is broad, "None" can be listed if a measurement is not available, and it is possible to define categorical properties by listing the category names in {}'s after the property name. Further details of input file formats are described in the Javadoc for Magpie (ex: see <a href="../javadoc/magpie/data/materials/CompositionDataset.html">CompositionDataset</a>).
+		
+	<p>Load data into Magpie by first creating a variable to store the data and then calling the "import" command for that variable. In the <a href="../examples/simple-model.in">examples/simple-model.in</a> example (which is the basis of the tutorial), composition data is loaded in from a sample dataset using the&nbsp;commands:
+	
+	<div style="margin-left: 40px">
+		<p><code>
+		data = new data.materials.CompositionDataset
+		<br>data import ./datasets/small_set.txt
+		</code>
+	</div>
+	
+	<p>The first command creates a variable representing a CompositionDataset object and names it "data." All of the available commands of this command are listed <a href="classes/data/materials/CompositionDataset.html">here</a>. In general, you can find the available commands for any variable types from <a href="variables.html">the Variables documentation page</a>. As described in the referenced documentation pages, the "import" command of data is called with the path of the dataset file as an argument, as shown in the second command.
+	
+	<p>After running these commands, the composition and measured properties of each of the materials described in "small_set.txt" are stored in the data variable. To specify that the formation energy (which is named "delta_e" in the data file) is the desired class variable, run the the "target" command:
+	
+	<div style="margin-left: 40px">
+		<p><code>
+		data target delta_e
+		</code>
+	</div>
+	
+	<p>The next step towards building a model is to generate attributes. By default, the CompositionDataset variable will compute attributes described in a recent (yet-unpublished) paper by <a>Ward <i>et al.</i></a>. Some of these attributes are based on the properties of the constituent elements. So, to compute attributes it is first necessary to define where the elemental property lookup tables are located and then define the elemental properties to be considered. That is accomplished by calling two "attributes" commands of the data variable:
+	
+	<div style="margin-left: 40px">
+		<p><code>
+		data attributes properties directory ./Lookup Data/
+		<br>data attributes properties add set general
+		</code>
+	</div>
+	
+	<p>Once these settings are defined, attributes are computed by calling: 
+	
+	<div style="margin-left: 40px">
+		<p><code>data attributes generate</code>
+	</div>
+	
+	<p>The "data" variable now contains 145 attributes describing the composition and the measured formation energy as the class variable. This information can be saved to disk using the save command. As described in the documentation for the <a href="text-interface.html">text&nbsp;interface</a>, this command takes the name of the variable as the first argument, the desired filename as the format as the second, and (optionally) the desired format as the third. To save in CSV format, the command is
+	
+	<div style="margin-left: 40px">
+		<p><code>save data delta_e csv</code>
+	</div>
+	
+	<h2>Building a Model</h2>
+	
+	<p>If you have done the previous parts of the tutorial, you now have a file named "delta_e.csv" that contains the attributes and formation energy of a few hundred crystalline compounds. In this part of the tutorial, we will describe one method for finding a suitable machine learning algorithm for this data and creating a model in Magpie.
+	
+	<p>Most of the machine learning algorithm available through Magpie are provided by other software pages, such as <a href="http://www.cs.waikato.ac.nz/ml/weka/">Weka</a> and <a href="http://scikit-learn.org/">scikit-learn</a>. For simplicity, this tutorial only describes how to use Weka and will only briefly skim over the features of Weka. If you want to learn more about these packages, it is strongly recommend to read their associated documentation.
+	
+	<p>Weka provides an excellent graphical interface testing the performance of the variety of algorithms available through it. Again, for the purpose of brevity, this tutorial assumes that you have learned how to import data and run models in Weka (e.g., by reading the <a href="http://www.cs.waikato.ac.nz/ml/weka/book.html">textbook</a>). Once you have settled on the algorithm that works best for your materials problem, the only information you need to save is the name of the algorithm and the desired settings. Luckily, Weka makes this easy. Simply opposite click on the name of the model and select "Copy configuration to clipboard".
+	
+	<center><img src="img/weka.png"/></center>
+	
+	<p>The appropriate variable type for regression models using Weka is <a href="../javadoc/magpie/models/regression/WekaRegression.html">WekaRegression</a>. As described in the variable description page for WekaRegression (see <a href="classes/models/regression/WekaRegression.html">here</a>), the "Usage" for this command is the name of a Weka algorithm and then the settings for the algorithm. Broadly, "Usage" statements describe the options for creating a certain object (e.g., the parameters for a model). To create a Weka model, paste the configuration from Weka as these options:
+	
+	<div style="margin-left: 40px">
+		<p><code>
+			model = new models.regression.WekaRegression weka.classifiers.trees.REPTree &
+			<br>-M 2 -V 0.001 -N 3 -S 1 -L -1 -I 0.0
+		</code>
+		<p>Note: To make the command look cleaner, it is split on to two lines using the "&" to mark that the lines should be combined together. 
+	</div>
+	
+	
+	
+	<p>To train this model, first create an input file containing all of the commands from the previous parts of this example (or just copy them from <a href="../examples/simple-model.in">examples/simple-model.in</a>). The file extension does not matter. Then, add the above command to the end of the input file and the following command for training the model:
+	
+	<div style="margin-left: 40px">
+		<p><code>
+		model train $data
+		</code>
+	</div>
+	
+	<p>The train command for variables that represent models will train the model using a dataset stored in another variable. When a variable is used in a command from another variable, it is accessed by putting a "$" in front of the name of the variable (e.g., "$data" to access the variable data). 
+	
+	<p>Once the model is trained, you can print out the training statistics (which are automatically computed) using the print command. Like the save command, the first argument is a variable name, which is followed by the desired print command. To print training statistics of the variable "model", this is:
+	
+	<div style="margin-left: 40px">
+		<p><code>print model training stats</code>
+	</div>
+	
+	<p>Likewise, one can perform 10-fold cross-validation and print the validation statistics by the two commands:
+	
+	<div style="margin-left: 40px">
+		<p><code>
+			model crossvalidate $data 10
+			<br>print model validation stats
+		</code>
+	</div>
+	
+	<p>This model and all of the associated statistics can be saved into a system-independent format by calling the save command without any format argument. It will also be prudent to an empty copy of the training data object, which can be used to compute attributes for a new dataset. The commands for this would be:
+	
+	<div style="margin-left: 40px">
+		<p><code>
+			save model delta_e-model
+			<br>template = data clone -empty
+			<br>save template delta_e-data
+		</code>
+	</div>
+	
+	<p>After running this script, Magpie will save two files, delta_e-model.obj and delta_e-data.obj, that contain all of the information necessary to use your model and can be run on any system with Magpie installed.
+	
+	<h2>Searching for New Materials</h2>
+	<p>If you have completed the other steps of this tutorial, you now have two Magpie object files (named delta_e-model.obj and delta_e-data.obj) that can be used to compute the formation energy of crystalline compounds. If you would prefer to skip those steps, simply add the save commands described at the end of the "Building a Model" section to the end of the <a href="../examples/simple-model.in">examples/simple-model.in</a> script, and run it. This portion of the tutorial shows how to use those components on a new dataset.
+	
+	<p>The first step is to create a dataset in which to store the search space. To do so, first launch Magpie and load in the object stored in delta_e&#8209;data.obj using the load command:
+	
+	<div style="margin-left: 40px">
+		<p><code>search = load delta_e-data.obj</code>
+	</div>
+	
+	<p>This command a empty dataset named "search." While this dataset does not contain any entries, it does contain all of the settings necessary to compute the same attributes used to train the model.
+	
+	<p>The next step is to generate a search space using the <a href="../javadoc/magpie/data/utilities/generators/IonicCompoundGenerator.html">IonicCompoundGenerator</a> command. As described in the "Usage" statement in the Javadoc, this entry generator takes 4 arguments: the minimum and maximum number of constituents, the maximum number of atoms per formula unit, and a list of elements to use. The appropriate command to generate all ternary ionic compounds with less than 10 atoms per unit cell composed of Li, Fe, Ni, Zr, O, or S is:
+	
+	<div style="margin-left: 40px">
+		<p><code>search generate IonicCompoundGenerator 3 3 10 Li Fe Ni Zr O S</code>
+	</div>
+	
+	<p>This should have generated a search space of 154 compounds. Since the search variable contains all of the settings for computing the attributes used when creating the formation energy model, you can call the "attributes generate" command without first specifying those options. Now, load and run the model by calling:
+	
+	<div style="margin-left: 40px">
+		<p><code>
+			model = load delta_e-model.obj
+			<br>model run $search
+		</code>
+	</div>
+	
+	<p>At this point, you can save the results of the model by saving the search variable in "stats" format or use the "rank" command of the search variable to print out the entries with the lowest formation energy.
+	
+</div>
+</html>

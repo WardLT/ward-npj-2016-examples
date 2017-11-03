@@ -1,0 +1,31 @@
+// Demonstrates how to use the evaluate command.
+// Predicts the formation energy of a few compounds 
+//  using a Weka-based model
+
+// Load in dataset
+data = new data.materials.CompositionDatasetExperimental
+data import datasets/small_set.txt
+data attributes properties add set general
+data attributes generate
+
+// Create model for formation energy
+data target delta_e
+model = new models.regression.WekaRegression trees.REPTree
+model train $data
+
+// Predict the formation energy of Ni3Al and NaBr
+evaluate $model $data Ni3Al NaBr
+
+// Create a model that predicts both formation energy and volume
+model = new models.regression.MultiPropertyRegression delta_e volume_pa
+leaf = new models.regression.WekaRegression trees.REPTree
+model submodel set delta_e $leaf
+leaf = new models.regression.MixingRuleRegression GSvolume_pa
+model submodel set volume_pa $leaf
+model train $data
+
+// Predict the formation energy and volume of Ni3Al and NaBr
+evaluate $model $data Ni3Al NaBr
+
+// Done
+exit

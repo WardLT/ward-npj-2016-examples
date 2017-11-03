@@ -1,0 +1,44 @@
+<html>
+<head>
+	<title>TargetRegressionStatistics</title>
+</head>
+<body>
+	<h1>TargetRegressionStatistics</h1>
+	<p>See <a href="../../../javadoc/magpie/analytics/TargetRegressionStatistics.html">Javadoc</a> for complete documentation of this class.</p>
+<p>
+<b>Usage</b>: &lt;target> [-accept &lt;Acceptance Tolerance>] [-window &lt;Max Window Size>] [-cands &lt;Max Number Candidates>]
+<br><i>Target</i>: Desired value of class variable
+<br><i>Acceptance Tolerance</i>: If the actual class variable is within this value of the target, consider the prediction a success
+<br><i>Maximum Window Size</i>: Set this and Acceptance Tolerance to analyze accuracy as a function of tolerance window size
+<br><i>Max Number Candidates</i>: Set this and acceptance tolerance in order to study accuracy as a function of number of candidates selected
+</p>
+<h2>Available Operations</h2>
+<p>These commands can be used to perform a variety of tasks, ranging from defining important
+settings about the object to actually using it.</p>
+<p>
+<b>evaluate $&lt;dataset></b> &ndash; Evaluate measured vs. predicted class of entries
+<br><i>dataset</i>: Dataset object to be evaluated.
+</p>
+<h2>Available Print Commands</h2>
+<p>These commands are run by calling &quot;print &lt;variable name&gt; 
+&lt;command> [&lt;options>]&quot;. Any output from that command will be 
+printed to standard output.</p>
+<p>
+<b>rank</b> &ndash; Prints how the performance of best-performing entries according to model predictions
+</p>
+<p>
+<b>roc</b> &ndash; Print out Receiver Operating Characteristic curve
+</p>
+<p>
+<b>stats</b> &ndash; Print out all statistics
+</p>
+<p>
+<b>window</b> &ndash; Prints statistics regarding this model&rsquo;s ability to act as a filter
+</p>
+<h2>Available Save Formats</h2>
+<p>Variables of this type can be saved in the following formats:</p>
+<p>
+<b>data</b> &ndash; Save predicted and measured class values used to compute statistics
+</p>
+</body>
+</html>

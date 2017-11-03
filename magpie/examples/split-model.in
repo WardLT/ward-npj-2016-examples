@@ -1,0 +1,50 @@
+// Predict whether a compound will have a bandgap by training two models: one
+//  on compounds that contain entirely metals, one were at least one non-metal is present
+
+// Load in data sets, generate attributes
+data = new data.materials.CompositionDataset
+data import ./datasets/small_set.txt
+data attributes properties directory ./Lookup Data/
+data attributes properties add set general
+data attributes generate
+
+// Create a new property for each entry that is 1 when bandgap > 0, and 0 otherwise
+data target bandgap
+data modify NonZeroClassModifier
+
+// Create training and validation sets
+train_data = data clone
+run_data = train_data split 0.5
+
+// Create the composite model
+model = new models.classification.SplitClassifier 
+
+// Define how to partition the data
+model splitter AllMetalsSplitter
+
+// Set each sub-model to be a REPTree
+submodel = new models.classification.WekaClassifier trees.REPTree
+model submodel set generic $submodel
+timer elapsed
+
+// Evaluate predictive ability and speed of single model 
+echo "Running single model"
+timer start train
+submodel train $train_data
+timer elapsed train
+timer start run
+submodel validate $run_data
+timer elapsed run
+print submodel validation stats
+
+// Evaluate predictive ability and speed of split model
+echo "Running single model"
+timer start train
+model train $train_data
+timer elapsed train
+timer start run
+model validate $run_data
+timer elapsed run
+print model validation stats
+	
+exit

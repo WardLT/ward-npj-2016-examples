@@ -1,0 +1,49 @@
+<html>
+<head>
+	<title>Contributing to Magpie</title>
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen"/>
+</head>
+<body>
+<div id="wrapper">
+	<div class="footer">
+		<center><a href="index.html">Manual Home</a></center>	
+	</div>
+	<center><h1>Contributing to Magpie</h1></center>
+	<p>Magpie is designed to be easy to modify and adapt to new problems. This part of the manual explains how to build Magpie from source and describes how to add new features.</p>
+
+	<p>The the latest version of the source code for Magpie is available on <a href="https://bitbucket.org/wolverton/magpie/">BitBucket</a>.
+	
+	<h2>Building Magpie</h2>
+	<p>There are two methods for compiling a new version of Magpie: using an automated build script provided with Magpie and through an Integrated Development Environment (IDE). For both methods, you will need to install version 7 (or greater) the Java Development Kit&nbsp;(JDK).
+	
+	<p>The first method for building Magpie is using Apache ANT, which is kind of a Java-centric version of Make (if that helps). To use it, simply copy or link <code>simple-build.xml</code> to <code>build.xml</code> in the Magpie root directory. Then, call <code>ant jar</code> and Ant will take care of compiling the source code, linking the libraries, and storing it all in the <code>dist</code> directory.</p>
+	
+	<p>The alternative (and recommended) method is to use an IDE to build Magpie. If you haven't already used one, IDEs are tools that provide a single platform for editing, debugging, and preparing software for distribution. Many (like <a href="http://netbeans.org">Netbeans</a>), have handy features like automatic code generation, error checking, and tools for automatically restructuring your code. There are a variety of IDEs available for writing Java programs, and you are probably better off reading their own guides for setting up a new project. Just keep in mind that you may need to tell the IDE to link with all of the libraries in the <code>required-libraries</code>&nbsp;directory.</p>
+	
+	<h2>Extending Magpie</h2>
+	<p>Now that you have a good understanding how to compile your new changes, it is time to discuss how to write new components.</p>
+	
+	<h3>Adding New Components</h3>
+	<p>Adding new functionality to Magpie will more than likely involve implementing a new version of some archetypal "Base" class. The best way to create a new implementation is to find an already existing class that is closest to what you want to do, and copy it. Make sure to place the new file in the same directory as the old implementation (very important when compiling Magpie). Once you have done that, follow this simple procedure:</p>
+	
+	<ol>
+	<li><b>Document What You Want to Do</b>: Java has a wonderful documentation generation tool. So, before you get too distracted in writing code, write out the goal of what you want this new filter or model or whatever to do in the top section of documentation above the "public class" line. Everyone will thank you, or at least feel less confused about why documentation for a totally different tool is at the top of your file.</li>
+	<li><b>Find Out What You Will Change</b>: Read the documentation in the base class to find out which operations you need to write. If there isn't some kind of guide on what this base class does, you have been cheated and should complain to whoever is in charge of Magpie (hopefully not you).</li>
+	<li><b>Actually Make Changes</b>: Hopefully, the code already in your file does something similar to what you wanted to accomplish. If so, this step could be decently easy.</li>
+	</ol>
+	
+	<h3>Adding New Text Commands</h3>
+	<p>Creating new text commands for the Magpie interface is certainly a more advanced topic. The general idea for adding a new command is to alter the runCommand(List&lt;Object&gt;) operation for the class in question. The source code for BaseModel and its implementations should give you a detailed set of examples for how to write new commands and how to document them. Read the JavaDoc for <a href="../javadoc/magpie/utility/interfaces/Commandable.html">Commandable</a> for more details on both.</p>
+	
+	<p>A few pitfalls to watch out for:</p>
+	
+	<ul>
+	<li>Forgetting to document your command</li>
+	<li>Not checking the input to the function before running the operation</li>
+	<li>Failing to return or "break" from a switch statement after executing operation</li>
+	<li>When overloading runCommand, forgetting to call the superclass for commands besides the new one you are implementing</li>
+	</ul>
+	
+</div>
+</body>
+</html>

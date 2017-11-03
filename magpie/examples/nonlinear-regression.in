@@ -1,0 +1,24 @@
+// Perform nonlinear regression to fit the function:
+//  f(x,y) = exp(-(x^2+y^2)/1000) * cos(3(x+y)/pi)
+
+// Load in data set
+data = new data.Dataset
+data import ./datasets/simple-data.txt
+
+// Define the function to be fit. Notation:
+//  Variables are defined by #{<name>}. 
+//  If <name> begins with "a:", the variable is a dependent variable.
+//  Values of dependent variables are linked to values of attributes in the dataset
+model = new models.regression.NonlinearRegressionExpr exp(-1 * (#{a:x} ^ 2 + #{a:y} ^ 2) / #{a}) * cos(#{b} * (#{a:x} + #{a:y}) / pi)
+model nonlinear guess a 1
+model nonlinear guess b 1
+model nonlinear maxiter 1000
+
+// Evaluate predictive ability
+model train $data
+
+// Print out the model and fit results
+print model model
+print model training stats
+	
+exit

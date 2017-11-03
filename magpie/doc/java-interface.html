@@ -1,0 +1,32 @@
+<html>
+<head>
+	<title>Magpie Java Interface</title>
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+</head>
+<body>
+<div id="wrapper">
+	<div class="footer">
+		<center><a href="index.html">Manual Home</a></center>	
+	</div>
+	
+	<center><h1>Java Interface for Magpie</h1></center>
+	<p>If you are already accustomed to the <a href="text-interface.html">text interface to Magpie</a>, the structure of the library and the names of operations are might be eerily familiar. If not, you might want to check out the <a href="../examples/index.html">examples</a> scripts to get an idea about what Dataset and Model objects are and how they are used.</p>
+	
+	<p>Most operations that one performs on a variable in the text interface directly map to an operation in Java. For instance, the command <code>submodel set &lt;index&gt $leaf</code> on a model corresponds to the <code>setModel(int index, BaseModel model)</code> function of a class that implements the SplitModel interface.</p>
+	
+	<p>The key exception to the "for any text command, there is a Java function" rule are text commands that involve a "method" parameter. In these cases, Magpie first searches for a class whose name matches the "method" parameter, creates an instance of that variable (with the options you specified), and then uses that variable to do something. For example, calling "<code>data modify NonZeroClassModifier</code>" creates an instance of the NonZeroClassModifier and calls the <code>modifyDataset(Dataset data)</code> operation of NonZeroClassModifier to make changes to <code>data</code>. Moral of the story: For commands that involve a "method" parameter, look for an class that performs the task you are looking to do.</p>
+	
+	<h3>Main Types of Classes</h3>
+	<p>As alluded to in the previous section, Magpie is built using many independent classes that each perform a specific task. These classes are all unique versions of several main archetypes, which are referred to as "BaseClasses". If you look in the list of classes in the <a href="../javadoc/index.html">Javadoc</a>, you may notice many classes whose names start with "Base". Each of these classes are not actually usable as written, but instead serve to provide a starting point for all classes designed to perform a specific kind of operation. For instance, all classes that are used to filter a Dataset are extensions of BaseDatasetFilter. While you can access a complete list of variable types in the Javadoc, here are a few of the ones that are the most useful:
+	
+	<ul>
+	<li><a href="../javadoc/magpie/data/Dataset.html/">Dataset</a>: Stores data of any type, as long as you can represent each entry as a unique list of numbers</li>
+	<li><a href="../javadoc/magpie/data/materials/CompositionDataset.html/">CompositionDataset</a>: Dataset for materials that can be uniquely identified based on their composition. Provides the ability to calculate attributes that can be used to create machine learning models</li>
+	<li><a href="../javadoc/magpie/models/BaseModel.html">BaseModel</a>: Base class for all models. From this Javadoc page, you can access a listing of all model types currently available in Magpie for both classification and regression.</li>
+	<li><a href="../javadoc/magpie/models/regression/WekaRegression.html">WekaRegression</a>: Interface to using the Weka machine learning library through Magpie.</li>
+	<li><a href="../javadoc/magpie/models/classification/SplitClassifier.html">SplitClassifier</a>: A model that can use other models to handle different kinds of data. Use this if, for instance, you want to have a model that handles intermetallics and ceramics differently.</li>
+	<li><a href="../javadoc/magpie/optimization/algorithms/ActiveLearningOptimizer.html">ActiveLearningOptimizer</a>: If provided with a model template and a way of evaluating new entries, can use machine learning to efficiently search space of possible choices to find the interesting ones faster.</li>
+	<li><a href="../javadoc/magpie/data/utilities/splitters/BaseDatasetSplitter.html">BaseSplitter</a>: Implementations of this class are designed to split a Dataset into multiple parts based on some criterion.</li>
+	</ul>
+</div>
+</html>

@@ -1,0 +1,171 @@
+<html>
+<head>
+	<title>CompositionDataset</title>
+</head>
+<body>
+	<h1>CompositionDataset</h1>
+	<p>See <a href="../../../../javadoc/magpie/data/materials/CompositionDataset.html">Javadoc</a> for complete documentation of this class.</p>
+<p>
+<b>Usage</b>: *No options*
+</p>
+<h2>Available Operations</h2>
+<p>These commands can be used to perform a variety of tasks, ranging from defining important
+settings about the object to actually using it.</p>
+<p>
+<b>&lt;output> = clone [-empty]</b> &ndash; Create a copy of this dataset
+<br><i>-empty</i>: Do not copy entries from dataset into clone
+</p>
+<p>
+<b>&lt;output> = split &lt;number|fraction></b> &ndash; Randomly select and remove entries from dataset
+<br><i>number|fraction</i>: Either the fraction or number of entries to be removed
+<br><i>output</i>: New dataset containing randomly selected entries that were in this dataset
+</p>
+<p>
+<b>&lt;output> = subset &lt;number|fraction></b> &ndash; Generate a random subset from this dataset
+<br><i>number|fraction</i>: Either the fraction or number of entries to select
+<br><i>output</i>: New dataset containing random selection from this dataset
+</p>
+<p>
+<b>add $&lt;dataset&gt; [-force]</b> &ndash; Add entries from another dataset
+<br><i>dataset</i>: Dataset to be merged with this one
+<br><i>-force</i>: Optional: Whether to force merge if attributes / classes / properties are different
+<br> If attributes, classes, or properties are different, attributes and class values in new entries (i.e., those from the other dataset) will be deleted and properties will be merged
+</p>
+<p>
+<b>add &lt;entries...&gt;</b> &ndash; Add entries to a dataset
+<br><i>entries...</i>: Strings describing entries to be added
+</p>
+<p>
+<b>attributes composition &lt;true|false&gt;</b> &ndash; Set whether to use composition as attributes
+<br><i>true|false</i>: - Whether to use composition as attributes
+<br> By default, this class does not use composition (by itself) as attributes
+</p>
+<p>
+<b>attributes expanders add &lt;method> [&lt;options...>]</b> &ndash; Add an attribute expander to be run after generating attributes
+<br><i>method</i>: How to expand attributes. Name of a BaseAttributeExpander ("?" to print available methods)
+<br><i>options...</i>: Any options for the expansion method These expanders are designed to create new attributes based on existing ones.
+</p>
+<p>
+<b>attributes expanders clear</b> &ndash; Clear the current list of attribute expanders
+</p>
+<p>
+<b>attributes expanders run</b> &ndash; Run the currently-defined list of attribute expanders
+</p>
+<p>
+<b>attributes generate</b> &ndash; Generate attributes for each entry
+</p>
+<p>
+<b>attributes generators add &lt;method> [&lt;options...>]</b> &ndash; Add a new attribute generator to list of generators
+<br><i>method</i>: New generation method. Name of a BaseAttributeGenerator ("?" to print available methods)
+<br><i>options...</i>: Any options for the generator method These expanders are designed to create new attributes tailored for a specific application.
+</p>
+<p>
+<b>attributes generators clear</b> &ndash; Clear the current list of attribute generators
+</p>
+<p>
+<b>attributes generators run</b> &ndash; Run the currently-defined list of attribute expanders
+</p>
+<p>
+<b>attributes properties &lt;directory></b> &ndash; Specify directory that contains the elemental property lookup files
+<br><i>directory</i>: Desired directory
+</p>
+<p>
+<b>attributes properties add &lt;names...></b> &ndash; Add elemental properties to use when generating attributes
+</p>
+<p>
+<b>attributes properties add set &lt;name&gt;</b> &ndash; Add in all elemental properties from a pre-defined set
+<br><i>name</i>: Name of the pre-defined set
+</p>
+<p>
+<b>attributes properties remove &lt;names...></b> &ndash; Remove properties from list of those used when generating attributes
+<br><i>names...</i>: Name of properties to remove
+</p>
+<p>
+<b>attributes properties</b> &ndash; List which elemental properties are used to generate attributes
+</p>
+<p>
+<b>attributes rank &lt;number> &lt;method> [&lt;options...&gt;]</b> &ndash; Rank attributes based on predictive power
+<br><i>number</i>: Number of top attributes to print
+<br><i>method</i>: Method used to rank attributes. Name of a BaseAttributeEvaluator ("?" to print available methods)
+<br><i>options...</i>: Options for the evaluation method.
+</p>
+<p>
+<b>attributes</b> &ndash; Print all attributes
+</p>
+<p>
+<b>combine $&lt;dataset&gt;</b> &ndash; Add entries from another dataset
+<br><i>dataset</i>: Dataset to combine with this dataset
+</p>
+<p>
+<b>filter &lt;include|exclude> &lt;method> [&lt;options...>]</b> &ndash; Run dataset through a filter
+<br><i>include|exclude</i>: Whether to include/exclude only entries that pass the filter
+<br><i>method</i>: Filtering method. Name of a BaseDatasetFilter ("?" to print available methods)
+<br><i>options...</i>: Options for the filter
+</p>
+<p>
+<b>generate &lt;method&gt; [&gt;options&lt;]</b> &ndash; Generate new entries
+<br><i>method</i>: Name of a BaseEntryGenerator. ("?" for options)
+<br><i>options</i>: Any options for the entry generator
+</p>
+<p>
+<b>import &lt;filename> [&lt;options...>]</b> &ndash; Import data by reading a file
+<br><i>filename</i>: Name of file to import data from
+<br><i>options...</i>: Any options used when parsing this dataset (specific to type of Dataset)
+</p>
+<p>
+<b>match $&lt;dataset&gt; &lt;num&gt;</b> &ndash; Find most similar entries in this dataset
+<br><i>dataset</i>: Dataset containing entries to be matched
+<br><i>num</i>: Number of closest entries to print
+<br> Prints the most similar entries in this dataset to those in the dataset passed as the argument.
+</p>
+<p>
+<b>modify &lt;method> [&lt;options>]</b> &ndash; Modify the dataset
+<br><i>method</i>: How to modify dataset. Name of a BaseDatasetModifier. ("?" to print available methods)
+<br><i>options</i>: Any options for the dataset
+</p>
+<p>
+<b>rank &lt;number> &lt;maximum|minimum> &lt;measured|predicted> &lt;method> [&lt;options>]</b> &ndash; Print the top ranked entries based by some measure
+<br><i>number</i>: Number of top entries to print
+<br><i>maximum|minimum</i>: Whether to print entries with the largest or smallest objection function
+<br><i>measured|predicted</i>: Whether to use the measured or predicted values when calculation
+<br><i>method</i>: Object function used to rank entries. Name of a BaseEntryRanker ("?" for available methods)
+<br><i>options...</i>: Any options for the objective function
+</p>
+<p>
+<b>target &lt;name&gt; [-keep]</b> &ndash; Set class variable to be a certain property
+<br><i>name</i>: Name of property to use as class variable
+<br><i>-keep</i>: Whether to keep entries without a measurement for this property
+</p>
+<h2>Available Print Commands</h2>
+<p>These commands are run by calling &quot;print &lt;variable name&gt; 
+&lt;command> [&lt;options>]&quot;. Any output from that command will be 
+printed to standard output.</p>
+<p>
+<b>details</b> &ndash; Print details about this class
+</p>
+<p>
+<b>dist</b> &ndash; Print distribution of entries between known classes
+</p>
+<h2>Available Save Formats</h2>
+<p>Variables of this type can be saved in the following formats:</p>
+<p>
+<b>arff</b> &ndash; Weka's ARFF format.
+<br> Requires that a measured value is available for the class variable of each entry.
+</p>
+<p>
+<b>comp</b> &ndash; All properties with composition written by element fraction
+<br> Very similar to the "prop" format"</div>
+</p>
+<p>
+<b>csv</b> &ndash; Comma-separated value format.
+<br> The value of each attribute and the measured class variable, if defined.
+</p>
+<p>
+<b>prop</b> &ndash; Print out the measured and predicted properties
+</p>
+<p>
+<b>stats</b> &ndash; Writes predicted and measured class variables.
+<br> This is intended to allow an external program to evaluate model performance.</div>
+</p>
+</body>
+</html>

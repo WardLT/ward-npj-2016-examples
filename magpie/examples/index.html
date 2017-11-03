@@ -1,0 +1,53 @@
+<html>
+<head>
+	<title>Magpie Examples</title>
+	<link rel="stylesheet" href="../doc/style.css" type="text/css" media="screen" />
+</head>
+<body>
+<div id="wrapper">
+	<div class="footer">
+		<center><a href="../doc/index.html">Manual Home</a></center>	
+	</div>
+	<center><h1>Magpie Examples</h1></center>
+	<p>These examples highlight some of the main capabilities of Magpie. Before reviewing them, you may want to review how to install Magpie and read Magpie commands in the main part of the <a href="../doc/index.html">manual</a>. If you have already installed it, each of these examples can be run by calling:</p>
+	<center><code>java -jar dist/Magpie.jar examples/&lt;example name&gt;</code></center>
+
+	<h2><b><a href="attributes.in">attributes.in</a></b></h2>
+	<p>Imports a small dataset containing the properties of a few crystalline compounds (which was taken from <a href="oqmd.org">OQMD</a>) and generates attributes that describe the chemistry of those compounds (like the mean atomic radius)<b>[LW 3Jun14: Will add a citation here when I have one]</b>. Then, the script finds which of these attributes correlate best with the formation energy and determines a reduced set of those attributes that would be appropriate for building a linear model.</p>
+
+	<h2><b><a href="simple-model.in">simple-model.in</a></b></h2>
+	<p>Trains a <a href="http://weka.sourceforge.net/doc.dev/weka/classifiers/trees/REPTree.html/">Reduced-Error Pruning Tree</a> model designed to predict the formation energy of a small set of crystalline compounds. Then, validates the predictive capability of that model using ten-fold cross-validation.</p>
+
+	<h2><b><a href="split-model.in">split-model.in</a></b></h2>
+	<p>Uses two distinct models to predict whether a compound will have a non-zero band gap. One model is trained on compounds that contain only metals, and the other on those with at least one non-metal constituent. Then, this example script validates the performance of this composite model using cross-validation and prints a receiver-operating characteristic curve.</p>
+
+	<h2><b><a href="clusterer.in">clusterer.in</a></b></h2>
+	<p>First identifies a subset of attributes that can be used to model the formation energy of a compound. Then, applies a clustering algorithm to separate entries into groups with similar values of these attributes. After this, prints the centers of the each group (defined as the average of all entries in that group) and saves the entries contained in each data cluster into csv format.</p>
+
+	<h2><b><a href="crm.in">crm.in</a></b></h2>
+	<p>Demonstrates the Clustering-Ranking-Modeling method of <a href="http://pubs.acs.org/doi/abs/10.1021/cm403727z">Meredig and Wolverton</a>. First, this script separates data into 4 subsets using KMeans++ clustering. Then, it trains a quadratic model for dilute-limit solution energies in zirconia using on the attribute that best models that property for each subset.</p>
+
+	<h2><b><a href="csp.in">csp.in</a></b></h2>
+	<p>Uses the Data-Mining Structure Prediction (DMSP) method of  <a href="http://www.nature.com/nmat/journal/v5/n8/full/nmat1691.html">Fisher <i>et al</i></a> to predict the most-likely crystal structures of two example compounds: Na<sub>5</sub>Pb<sub>2</sub> and Al<sub>2</sub>NiCu.</p>
+
+	<h2><b><a href="optimization.in">optimization.in</a></b></h2>
+	<p>Demonstrates an optimization algorithm that employs two regression models to find the maximum of the function:</p>
+	<center><code>f(x,y) = exp(-(x<sup>2</sup>+y<sup>2</sup>)/1000) * cos(3(x+y)/&pi;).</code></center>
+
+	<h2><b><a href="nonlinear-regression.in">nonlinear-regression.in</a></b></h2>
+	<p>Performs nonlinear regression to fit parameters of an expression.</p>
+
+	<h2><b><a href="simple-neural-network.in">simple-neural-network.in</a></b></h2>
+	<p>Uses a neural network model to predict the formation energy of a few compounds. Before constructing the model, adjusts attributes and class variable to exist on the same range.</p>
+        
+        <h2><b><a href="scikit-learn.in">scikit-learn.in</a></b></h2>
+        <p>Uses a RandomForest model from <a href="http://scikit-learn.org/stable/">scikit-learn</a> to predict the formation energies of a small set of compounds.</p>
+
+	<h2><b><a href="multi-objective.in">multi-objective.in</a></b></h2>
+	<p>Uses multi-objective optimization techniques to find materials that fit two distinct property requirements.</p>
+
+	<h2><b><a href="evaluate.in">evaluate.in</a></b></h2>
+	<p>Shows how to use the evaluate command to predict the properties of entries directly from the text interface.</p>
+</div>
+</body>
+</html>

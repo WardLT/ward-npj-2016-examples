@@ -1,0 +1,73 @@
+<html>
+<head>
+	<title>GeneticAlgorithm</title>
+</head>
+<body>
+	<h1>GeneticAlgorithm</h1>
+	<p>See <a href="../../../../../javadoc/magpie/optimization/algorithms/genetic/GeneticAlgorithm.html">Javadoc</a> for complete documentation of this class.</p>
+<p>
+<b>Usage</b>: &lt;Crossover Function> &lt;Mutation Function> [-weight &lt;weight>] [-mutprob &lt;mutprob>] [-prev &lt;prev>] [-elite &lt;elite>]
+<br><i>Mutation Function</i>: Function used to perform mutation operations. Type "?" for available options
+<br><i>Crossover Function</i>: Function used to perform cross-over. Type "?" for available options
+<br><i>weight</i>: How much weight to apply to better-ranking entries (default: 10)
+<br><i>mutprob</i>: Probability that a candidate will be mutated after crossover (default: 0.1)
+<br><i>prev</i>: How many previous generations to include in breeding pool (default: 1)
+<br><i>elite</i>: How many of the best-performing entries to include in breeding pool (default: 0)
+</p>
+<h2>Available Operations</h2>
+<p>These commands can be used to perform a variety of tasks, ranging from defining important
+settings about the object to actually using it.</p>
+<p>
+<b>run</b> &ndash; Start optimizer
+<br> Will run until max iterations is reached, or oracle is unable to process all new candidates.
+</p>
+<p>
+<b>set gensize &lt;number</b> &ndash; Set number of new candidates per iteration
+<br><i>number</i>: Desired number of new entries per generation
+</p>
+<p>
+<b>set initial $&lt;dataset></b> &ndash; Define initial population
+<br><i>dataset</i>: Dataset containing entries to use as initial population
+</p>
+<p>
+<b>set maxiter &lt;number></b> &ndash; Set the number of iterations algorithm will perform
+<br><i>number</i>: Desired maximum number of iterations
+</p>
+<p>
+<b>set objective &lt;min|max> &lt;method> [&lt;options...>]</b> &ndash; Set the objective function
+<br><i>min|max</i>: Whether to minimize or maximize the objective function.
+<br><i>method</i>: Desired objective function. Name of an BaseEntryRanker class. ("?" for options)
+<br><i>options...</i>: Options for objective function
+</p>
+<p>
+<b>set oracle &lt;method> [&lt;options...>]</b> &ndash; Define method used to calculate properties of selected candidates
+<br><i>method</i>: How to calculate properties of an entry. Name of a BaseOracle ("?" for options)
+</p>
+<p>
+<b>set search $&lt;dataset></b> &ndash; Define search space
+<br><i>dataset</i>: Dataset containing any and all entries optimization algorithm is allowed to evaluate
+</p>
+<p>
+<b>stats ntop &lt;number></b> &ndash; Control number of top entries to detect when evaluating algorithm performance
+<br><i>number</i>: Number of globally best-performing entries to check for after each generation
+</p>
+<p>
+<b>stats success &lt;include|exclude> &lt;filter method&gt; [&lt;filter options...&gt;]</b> &ndash; Define a filter used to define when an entry is a "success"
+<br><i>include|exclude</i>: Whether to include entries that pass the filter as a success
+<br><i>filter method</i>: Name of a dataset filter ("?" for options)
+<br><i>filter options...</i>: Any options for that filter
+</p>
+<p>
+<b>write generations &lt;directory&gt; &lt;format&gt;</b> &ndash; Write out the data from each generation
+<br><i>directory</i>: Directory in which to save datasets
+<br><i>format</i>: Format in which to write datasets
+</p>
+<h2>Available Print Commands</h2>
+<p>These commands are run by calling &quot;print &lt;variable name&gt; 
+&lt;command> [&lt;options>]&quot;. Any output from that command will be 
+printed to standard output.</p>
+<p>
+<b>stats</b> &ndash; Print statistics about optimization run
+</p>
+</body>
+</html>

@@ -1,0 +1,27 @@
+// This example script trains a neural network on the 
+//  formation energies of a small set of compounds
+
+// Load in a dataset of compound properties, generate attributes
+data = new data.materials.CompositionDataset
+data import ./datasets/small_set.txt
+data attributes properties directory ./Lookup Data/
+data attributes properties add set general
+data attributes generate
+
+// Set formation energy as property to be modeled
+data target delta_e
+
+// Create a simple two-layer perceptron based on a reduced subset of attributes
+model = new models.regression.WekaRegression functions.MultilayerPerceptron -H "a,a"
+model normalize attributes class SoftmaxNormalizer 1
+selector = new attributes.selectors.WekaAttributeSelector 
+model set selector $selector
+
+// Train and validate it
+model train $data
+model crossvalidate $data 10
+
+// Print out validation and training statistics
+print model training stats
+print model validation stats
+exit

@@ -1,0 +1,39 @@
+// Perform the "Cluster-Rank-Modeling" method of Wolverton and Meredig
+//  See: http://pubs.acs.org/doi/abs/10.1021/cm403727z
+
+// Load in a dataset of compound properties
+data = new data.materials.ElementDataset
+data import ./datasets/zirconia_sln_energies.txt
+
+// Define where to find elemental property data
+data attributes properties directory ./Lookup Data/
+
+// Select which set of elemental properties to use for attributes
+//  NOTE: This is a different set than those used by Meredig & Wolverton
+data attributes properties add set general
+
+// Define solution energy as the target property
+data target sln_energy
+
+// Generate new attributes
+data attributes generate
+
+// Define clusterer to use k-means++ based on a subset of attributes
+clusterer = new cluster.WekaClusterer SimpleKMeans -N 4 -I 500
+
+// Build a model that splits data using the clusterer
+model = new models.regression.SplitRegression
+model splitter ClustererSplitter $clusterer
+
+// Use the the best-fitting quadratic model of a single attribute
+submodel = new models.regression.PolynomialRegression 2
+selector = new attributes.selectors.BestIndividualSelector 1 PolynomialFitEvaluator 2
+submodel set selector $selector
+model submodel set generic $submodel
+
+// Train the model
+model train $data
+print model training stats
+print model model
+
+exit

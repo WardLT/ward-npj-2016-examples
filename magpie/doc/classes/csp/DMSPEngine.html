@@ -1,0 +1,52 @@
+<html>
+<head>
+	<title>DMSPEngine</title>
+</head>
+<body>
+	<h1>DMSPEngine</h1>
+	<p>See <a href="../../../javadoc/magpie/csp/DMSPEngine.html">Javadoc</a> for complete documentation of this class.</p>
+<p>
+<b>Usage</b>: *No options*
+</p>
+<h2>Available Operations</h2>
+<p>These commands can be used to perform a variety of tasks, ranging from defining important
+settings about the object to actually using it.</p>
+<p>
+<b>examples &lt;composition&gt;</b> &ndash; Get a list of other possible prototypes for a certain composition and all known examples for each prototype
+<br><i>composition</i>: Composition in question
+</p>
+<p>
+<b>exclude &lt;elements...&gt;</b> &ndash; Remove entries containing certain elements from the list of known compounds
+<br><i>elements</i>: List of elements abbreviations
+</p>
+<p>
+<b>get model = $&ltmodel&gt;</b> &ndash; Get the classifier used to predict last crystal structure
+</p>
+<p>
+<b>predict &lt;composition> [&lt;# to show>]</b> &ndash; Predict what structural prototypes are most likely for a certain compound
+<br><i>composition</i>: Composition of compound of interest
+<br><i># to show</i>: Number of the top candidates to print (default = 10)
+</p>
+<p>
+<b>prototypes &lt;filename></b> &ndash; Import list of known prototypes
+<br><i>filename</i>: Path to file containing composition of known compounds, and name of their prototype structure
+</p>
+<p>
+<b>validate &lt;ncomp> [&lt;folds>]</b> &ndash; Evaluate performance of CSP algorithm using cross-validation.
+<br><i>ncomp</i>: Only attempt to predict structures of compounds with this number of constituents
+<br><i>folds</i>: Number of folds in which to split known compounds. Can use "loocv" to perform leave-one-out cross-validation (default = 20)
+</p>
+<h2>Available Print Commands</h2>
+<p>These commands are run by calling &quot;print &lt;variable name&gt; 
+&lt;command> [&lt;options>]&quot;. Any output from that command will be 
+printed to standard output.</p>
+<p>
+<b>stats list-length [&lt;min prob&gt;] [&lt;max length&gt;]</b> &ndash; Print out the minimum number of prototypes that need to be calculated for a certain prediction success probability
+<br><i>min prob</i>: Minimum success probability to print (default = 0.7)
+<br><i>max length</i>: Maximum length list to print (default = 20)
+</p>
+<p>
+<b>stats</b> &ndash; Print out the number of predictions used to generate performance statistics.
+</p>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<html>
+<head>
+	<title>SimpleLinearModelExample</title>
+</head>
+<body>
+	<h1>SimpleLinearModelExample</h1>
+	<p>See <a href="../../../../../javadoc/magpie/models/regression/nonlinear/SimpleLinearModelExample.html">Javadoc</a> for complete documentation of this class.</p>
+<p>
+<b>Usage</b>: *No options*
+</p>
+<h2>Available Operations</h2>
+<p>These commands can be used to perform a variety of tasks, ranging from defining important
+settings about the object to actually using it.</p>
+<p>
+<b>nonlinear guess &lt;name> &lt;guess></b> &ndash; Set the initial guess for a certain parameter
+<br><i>name</i>: Name of parameter to define guess for
+<br><i>guess</i>: Initial guess for that parameter
+</p>
+<p>
+<b>nonlinear maxiter &lt;maxiter></b> &ndash; Set maximum number of iterations for fitting routines
+<br><i>maxiter</i>: Maximum number of iterations
+</p>
+<p>
+<b>normalize [attributes] [class] &lt;method&gt; [&lt;options...&gt;]</b> &ndash; Define how to normalize data (data is not normalized by default)
+<br><i>attributes</i>: Whether to normalize attributes
+<br><i>class</i>: Whether to normalize class variable
+<br><i>method</i>: Method used to normalize attributes ("?" for available options)
+<br><i>options...</i>: Any options for the normalizer
+</p>
+<p>
+<b>output = crossvalidate $&lt;dataset> [&lt;folds>]</b> &ndash; Use k-fold cross-validation to assess model performance.
+<br><i>dataset</i>: Dataset to use for cross validation
+<br><i>folds</i>: Number of crossvalidation folds (default = 10)
+<br><i>output</i>: Dataset, result of used to compute performance staistics
+<br> Splits <i>dataset</i> into <i>folds</i> parts. Trains model on <i>folds</i> - 1 parts, validates against remaining part. Repeats using each part as the validation set.
+</p>
+<p>
+<b>robust &lt;Q></b> &ndash; Define False Positive Rate used for robust regression. See Motulsky and Brown
+<br><i>Q</i>: Desired FPR during outlier detection.
+</p>
+<p>
+<b>run $&lt;dataset></b> &ndash; Use model to predict class values for each entry
+<br><i>dataset</i>: Dataset to evaluate
+</p>
+<p>
+<b>set selector $&lt;filter&gt;</b> &ndash; Define the BaseDatasetFilter used to filter data before attribute normalization, attribute selection, and model training.
+<br><i>filter</i>: Filter to use
+</p>
+<p>
+<b>set selector $&lt;selector&gt;</b> &ndash; Define the BaseAttributeSelector used to screen attributes before training
+<br><i>selector</i>: Attribute selector to use
+</p>
+<p>
+<b>train $&lt;dataset&gt;</b> &ndash; Train model using measured class values
+<br><i>dataset</i>: Dataset used to train this model
+</p>
+<p>
+<b>validate $&lt;dataset></b> &ndash; Validate model against external dataset
+<br><i>dataset</i>: - Dataset to use for validate
+</p>
+<h2>Available Print Commands</h2>
+<p>These commands are run by calling &quot;print &lt;variable name&gt; 
+&lt;command> [&lt;options>]&quot;. Any output from that command will be 
+printed to standard output.</p>
+<p>
+<b>description</b> &ndash; Print out short description of this model.
+</p>
+<p>
+<b>model</b> &ndash; Print out the model
+</p>
+<p>
+<b>selector</b> &ndash; Print out attributes used selected by internal BaseAttributeSelector, if defined
+</p>
+<p>
+<b>training [&lt;command>]</b> &ndash; Print out statistics generated during training
+<br><i>command</i>: Command to be passed to internal BaseStatistics object.
+</p>
+<p>
+<b>validation [&lt;command>]</b> &ndash; Print out statistics generated during validation
+<br><i>command</i>: Command to be passed to internal BaseStatistics object.
+</p>
+<h2>Available Save Formats</h2>
+<p>Variables of this type can be saved in the following formats:</p>
+<p>
+<b>training</b> &ndash; Print out performance data for training set
+</p>
+<p>
+<b>validation</b> &ndash; Print out performance data for validation set
+</p>
+</body>
+</html>

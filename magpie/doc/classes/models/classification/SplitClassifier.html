@@ -1,0 +1,113 @@
+<html>
+<head>
+	<title>SplitClassifier</title>
+</head>
+<body>
+	<h1>SplitClassifier</h1>
+	<p>See <a href="../../../../javadoc/magpie/models/classification/SplitClassifier.html">Javadoc</a> for complete documentation of this class.</p>
+<p>
+<b>Usage</b>: *No options*
+</p>
+<h2>Available Operations</h2>
+<p>These commands can be used to perform a variety of tasks, ranging from defining important
+settings about the object to actually using it.</p>
+<p>
+<b>normalize [attributes] [class] &lt;method&gt; [&lt;options...&gt;]</b> &ndash; Define how to normalize data (data is not normalized by default)
+<br><i>attributes</i>: Whether to normalize attributes
+<br><i>class</i>: Whether to normalize class variable
+<br><i>method</i>: Method used to normalize attributes ("?" for available options)
+<br><i>options...</i>: Any options for the normalizer
+</p>
+<p>
+<b>output = crossvalidate $&lt;dataset> [&lt;folds>]</b> &ndash; Use k-fold cross-validation to assess model performance.
+<br><i>dataset</i>: Dataset to use for cross validation
+<br><i>folds</i>: Number of crossvalidation folds (default = 10)
+<br><i>output</i>: Dataset, result of used to compute performance staistics
+<br> Splits <i>dataset</i> into <i>folds</i> parts. Trains model on <i>folds</i> - 1 parts, validates against remaining part. Repeats using each part as the validation set.
+</p>
+<p>
+<b>run $&lt;dataset></b> &ndash; Use model to predict class values for each entry
+<br><i>dataset</i>: Dataset to evaluate
+</p>
+<p>
+<b>set selector $&lt;filter&gt;</b> &ndash; Define the BaseDatasetFilter used to filter data before attribute normalization, attribute selection, and model training.
+<br><i>filter</i>: Filter to use
+</p>
+<p>
+<b>set selector $&lt;selector&gt;</b> &ndash; Define the BaseAttributeSelector used to screen attributes before training
+<br><i>selector</i>: Attribute selector to use
+</p>
+<p>
+<b>splitter &lt;method> [&lt;options...>]</b> &ndash; Define splitter used to partition dataset between models
+<br><i>method</i>: Method used to split data. Name of a BaseDatasetSplitter ("?" for options)
+<br><i>options</i>: Any options for the splitter
+</p>
+<p>
+<b>submodel get &lt;number> = &lt;output></b> &ndash; Retrieve a specific submodel
+<br><i>number</i>: Index of submodel to retrieve (list starts with 0) Returns a clone of the model - you cannot use this to edit the model.
+</p>
+<p>
+<b>submodel get generic = &lt;output></b> &ndash; Retrieve the template for any unassigned submodels
+</p>
+<p>
+<b>submodel set &lt;number> $&lt;model></b> &ndash; Set a specific submodel
+<br><i>number</i>: Index of the submodel to set (list starts with 0)
+<br><i>model</i>: An instance of BaseModel to use for that model
+</p>
+<p>
+<b>submodel set generic $&lt;model></b> &ndash; Define a model template to use for all submodels
+<br><i>model</i>: An instance of BaseModel. Note: Do not use this command for CompositeRegression unless each model automatically uses a different random number seed. Otherwise, each submodel will be identical.
+</p>
+<p>
+<b>submodel</b> &ndash; Print the number of submodels
+</p>
+<p>
+<b>train $&lt;dataset&gt;</b> &ndash; Train model using measured class values
+<br><i>dataset</i>: Dataset used to train this model
+</p>
+<p>
+<b>validate $&lt;dataset></b> &ndash; Validate model against external dataset
+<br><i>dataset</i>: - Dataset to use for validate
+</p>
+<h2>Available Print Commands</h2>
+<p>These commands are run by calling &quot;print &lt;variable name&gt; 
+&lt;command> [&lt;options>]&quot;. Any output from that command will be 
+printed to standard output.</p>
+<p>
+<b>description</b> &ndash; Print out short description of this model.
+</p>
+<p>
+<b>model</b> &ndash; Print out the model
+</p>
+<p>
+<b>selector</b> &ndash; Print out attributes used selected by internal BaseAttributeSelector, if defined
+</p>
+<p>
+<b>splitter</b> &ndash; Print out the name of splitter used by this model
+</p>
+<p>
+<b>submodel &lt;number> [&lt;command...>]</b> &ndash; Pass a print command to one of the submodels
+<br><i>number</i>: Index of model to operate on (starts at 0)
+<br><i>command</i>: Print command that gets passed to that submodel
+</p>
+<p>
+<b>submodel</b> &ndash; Print out number of submodels
+</p>
+<p>
+<b>training [&lt;command>]</b> &ndash; Print out statistics generated during training
+<br><i>command</i>: Command to be passed to internal BaseStatistics object.
+</p>
+<p>
+<b>validation [&lt;command>]</b> &ndash; Print out statistics generated during validation
+<br><i>command</i>: Command to be passed to internal BaseStatistics object.
+</p>
+<h2>Available Save Formats</h2>
+<p>Variables of this type can be saved in the following formats:</p>
+<p>
+<b>training</b> &ndash; Print out performance data for training set
+</p>
+<p>
+<b>validation</b> &ndash; Print out performance data for validation set
+</p>
+</body>
+</html>

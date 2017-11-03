@@ -1,0 +1,35 @@
+// This example script trains a sklearn-based model on the 
+//  formation energies of a small set of compounds
+
+// Load in a dataset of compounds
+data = new data.materials.CompositionDataset
+data import ./datasets/small_set.txt
+
+// Define where to find elemental property data
+data attributes properties directory ./Lookup Data/
+// Select which set of elemental properties to use for attributes
+data attributes properties add set general
+
+// Generate new attributes
+data attributes generate
+
+// Set formation energy as property to be modeled
+data target delta_e
+
+// Use the ScikitLearnRegression wrapper to train and evaluate a random forest model
+//   This model was created by creating this classifier in Python and saving
+//   it to a pickle file using the following script:
+//     from sklearn.ensemble import RandomForestClassifier
+//     clf = RandomForestClassifier(n_estimators=10, max_depth=None)
+//     from sklearn.externals import joblib
+//     joblib.dump(clf, 'sklearn-randomforest.pkl')
+model = new models.regression.ScikitLearnRegression ./test-files/sklearn-randomforest.pkl
+// model = new models.regression.WekaRegression functions.LinearRegression
+model train $data
+model crossvalidate $data 10
+
+// Print out training and validation statistics
+print model training stats
+print model validation stats
+
+exit

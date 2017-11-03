@@ -1,0 +1,48 @@
+<html>
+<head>
+	<title>WekaClusterer</title>
+</head>
+<body>
+	<h1>WekaClusterer</h1>
+	<p>See <a href="../../../javadoc/magpie/cluster/WekaClusterer.html">Javadoc</a> for complete documentation of this class.</p>
+<p>
+<b>Usage</b>: &lt;method> [&lt;options...>]
+<br><i>method</i>: Method used to cluster data. Name of a Weka Clusterer ("?" for available methods)
+<br><i>options...</i>: Options for the clusterer
+</p>
+<h2>Available Operations</h2>
+<p>These commands can be used to perform a variety of tasks, ranging from defining important
+settings about the object to actually using it.</p>
+<p>
+<b>&lt;output> = get &lt;num> $&lt;input></b> &ndash; Get a certain cluster from a dataset
+<br><i>num</i>: Index of cluster to extract
+<br><i>input</i>: Dataset containing entries to cluster
+<br><i>output</i>: Dataset Single cluster from the input dataset.
+</p>
+<p>
+<b>selector $&lt;selector></b> &ndash; Define an attribute selector to use before clustering
+<br><i>selector</i>: BaseAttributeSelector to use for selection
+</p>
+<p>
+<b>split $&lt;dataset> &lt;filename> [&lt;format>]</b> &ndash; Split dataset into several clusters, save them
+<br><i>dataset</i>: Dataset to be partitioned
+<br><i>filename</i>: Base filename to use (actual file name will be &lt;filename>&lt;cluster #>.&lt;format>)
+<br><i>format</i>: Optional: Format to use when saving clusters
+</p>
+<p>
+<b>train $&lt;dataset></b> &ndash; Train a clustering algorithm
+<br><i>dataset</i>: Dataset to use for training
+</p>
+<h2>Available Print Commands</h2>
+<p>These commands are run by calling &quot;print &lt;variable name&gt; 
+&lt;command> [&lt;options>]&quot;. Any output from that command will be 
+printed to standard output.</p>
+<p>
+<b>selector</b> &ndash; Print out attributes used to generate cluster, if an BaseAttributeSelector was provided
+</p>
+<p>
+<b>stats [&lt;command>]</b> &ndash; Print out statistics about clustering
+<br><i>command</i>: Command to be passed to and run by internal ClustererStatistics class.
+</p>
+</body>
+</html>

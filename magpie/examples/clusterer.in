@@ -1,0 +1,35 @@
+// Cluster a set of compounds according to a subset of their attributes 
+
+// Load in a dataset of compound properties
+data = new data.materials.CompositionDataset
+data import ./datasets/small_set.txt
+data filter exclude ContainsElementFilter He Ne Ar Kr Xe
+data target delta_e
+data attributes properties directory ./Lookup Data/
+data attributes properties add set general
+data attributes generate
+
+// Create an attribute selector
+selector = new attributes.selectors.WekaAttributeSelector -eval CfsSubsetEval -M -search BestFirst -D 1
+
+// Create a simple clusterer using Weka
+clusterer = new cluster.WekaClusterer SimpleKMeans -N 2 -I 500 -P
+clusterer selector $selector
+
+// Train this cluster on the full dataset
+clusterer train $data
+
+// Using this clusterer, extract all entries from data
+//  that fall in cluster #0, save as cluster 0
+cluster0 = clusterer get 0 $data 
+print cluster0 details
+
+// Print out information about centroids of clusters
+print clusterer stats clust
+
+// Split "data" into clusters, then save each with a
+//  filename of clusters<#> in "stats" format
+clusterer split $data cluster stats
+
+
+exit

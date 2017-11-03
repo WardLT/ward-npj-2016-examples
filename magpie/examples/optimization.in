@@ -1,0 +1,59 @@
+// Uses an iterative machine learning approach
+//  to find the maximum of the function:
+//  f(x,y) = exp(-(x^2+y^2)/1000) * cos(3(x+y)/pi)
+//  between [-10,-10] and [10,10]
+
+// Import dataset (f sampled at 880 points)
+data = new data.Dataset
+data import datasets/simple-data.csv
+
+// Get initial population
+initial = data subset 10
+
+// Create model (composite of a M5P model tree and
+//  a 4th-order polynomial (in x and y))
+model = new models.regression.CompositeRegression
+submodel = new models.regression.WekaRegression trees.M5P
+model submodel set 0 $submodel
+submodel = new models.regression.PolynomialRegression 4
+model submodel set 1 $submodel
+
+// Create the optimizer. At each iteration, it trains each submodel
+//  on all entries that have been evaluated so far. Then, it 
+//  will pick a new generation that has 10% entries that were
+//  selected randomly, 10% that had the greatest difference in
+//  the predictions between each model, and the rest from entries
+//  with the highest predicted f(x,y)
+opt = new optimization.algorithms.ActiveLearningOptimizer 0.1 0.1
+
+// Define that our goal is to maximize f
+opt set objective max SimpleEntryRanker
+
+// Set the initial population and dataset to be searched
+opt set initial $initial
+opt set search $data
+
+// Define the "Oracle" used to evaluate f(x,y). This one
+//  works by looking up the answer from a provided dataset
+opt set oracle LookupOracle $data
+
+// Define other settings
+opt set maxiter 48
+opt set gensize 5
+opt set model $model
+
+// Define what statistics we are interested in:
+//  1. If the highest 10 entries have been found
+//  2. How many entries with f > 0.9 were found
+opt stats ntop 10
+opt stats success include ClassFilter measured > 0.9
+
+// Run 
+opt run
+
+// Print results
+print opt stats
+
+// We're done here.
+exit
+

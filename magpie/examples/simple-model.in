@@ -1,0 +1,30 @@
+// This example script trains a Weka-based model on the 
+//  formation energies of a small set of compounds
+
+// Load in a dataset of compounds
+data = new data.materials.CompositionDataset
+data import ./datasets/small_set.txt
+
+// Define where to find elemental property data
+data attributes properties directory ./Lookup Data/
+// Select which set of elemental properties to use for attributes
+data attributes properties add set general
+
+// Generate new attributes
+data attributes generate
+
+// Set formation energy as property to be modeled
+data target delta_e
+
+// Create a simple model using Weka, then test it
+model = new models.regression.WekaRegression trees.RandomForest
+model train $data
+model crossvalidate $data 10
+
+// Print out training statistics
+print model validation stats
+
+// Print out suggested citations
+citations
+
+exit

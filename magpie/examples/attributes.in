@@ -1,0 +1,28 @@
+// This example script ranks attributes based on their ability 
+//  to predict formation energy for a set of compounds, and then generates
+//  a reduced subset of attributes with Weka
+
+// Load in a dataset of compound properties
+data = new data.materials.CompositionDataset
+data import ./datasets/small_set.txt
+
+// Define where to find elemental property data
+data attributes properties directory ./Lookup Data/
+// Select which set of elemental properties to use for attributes
+data attributes properties add set general
+
+// Generate new attributes
+data attributes generate
+
+// Set formation energy as property to be modeled
+data target delta_e
+
+// Print out 10 attributes with the best correlation coefficient
+data attributes rank 10 PearsonsCorrelationEvaluator
+
+// Generate a reduced list of attributes with an AttributeSelector
+selector = new attributes.selectors.WekaAttributeSelector -eval CfsSubsetEval -M -search BestFirst -D 1
+selector train $data
+selector run $data
+
+exit
